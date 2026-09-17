@@ -193,9 +193,38 @@ function setMode(m){
 function copyResult(){ navigator.clipboard&&navigator.clipboard.writeText(document.getElementById('result').textContent); tick('op'); }
 // conv simple
 const units={
- length:[{id:'m',l:'Meter',f:1},{id:'km',l:'Kilometer',f:1000},{id:'ft',l:'Feet',f:0.3048},{id:'in',l:'Inch',f:0.0254}],
- land:[{id:'sqm',l:'Sq Meter',f:1},{id:'sqft',l:'Sq Feet',f:0.092903},{id:'acre',l:'Acre',f:4046.86},{id:'bigha_up',l:'Bigha UP (Jaunpur)',f:2529.29},{id:'biswa',l:'Biswa',f:126.4645},{id:'dismil',l:'Dismil',f:40.4686}],
- weight:[{id:'kg',l:'Kg',f:1},{id:'g',l:'Gram',f:0.001},{id:'lb',l:'Pound',f:0.453592}],
+ length:[
+  {id:'m',l:'Meter',f:1},
+  {id:'km',l:'Kilometer',f:1000},
+  {id:'cm',l:'Centimetre',f:0.01},
+  {id:'mm',l:'Millimetre',f:0.001},
+  {id:'ft',l:'Feet',f:0.3048},
+  {id:'in',l:'Inch',f:0.0254},
+  {id:'yd',l:'Yard',f:0.9144},
+  {id:'mi',l:'Mile',f:1609.34}
+ ],
+ land:[
+  {id:'sqm',l:'Sq Meter',f:1},
+  {id:'sqft',l:'Sq Feet',f:0.092903},
+  {id:'sqyd',l:'Sq Yard',f:0.836127},
+  {id:'acre',l:'Acre',f:4046.86},
+  {id:'hect',l:'Hectare',f:10000},
+  {id:'bigha_up',l:'Bigha UP (Pucca)',f:2529.29},
+  {id:'biswa',l:'Biswa (20/Kari)',f:126.4645},
+  {id:'kari',l:'Kari / Kadi (कड़ी)',f:6.32322},
+  {id:'dismil',l:'Dismil',f:40.4686},
+  {id:'katha',l:'Katha (UP)',f:126.4645}
+ ],
+ weight:[
+  {id:'kg',l:'Kilogram',f:1},
+  {id:'g',l:'Gram',f:0.001},
+  {id:'mg',l:'Milligram',f:0.000001},
+  {id:'lb',l:'Pound',f:0.453592},
+  {id:'oz',l:'Ounce',f:0.0283495},
+  {id:'q',l:'Quintal',f:100},
+  {id:'t',l:'Tonne',f:1000},
+  {id:'l',l:'Litre (water ~1kg)',f:1}
+ ],
  temp:[{id:'c',l:'Celsius'},{id:'f',l:'Fahrenheit'}]
 };
 function renderUnits(){
