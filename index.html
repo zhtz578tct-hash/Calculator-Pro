@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Calculator Pro</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Calculator Pro">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0f0f10">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%23121214'/><rect x='20' y='20' width='140' height='140' rx='28' fill='%23FF9F0A'/><text x='90' y='115' font-size='90' text-anchor='middle' font-family='Arial' font-weight='700' fill='white'>=</text></svg>">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+body{background:#0a0a0a;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh;padding:12px;overflow:hidden}
+.shell{width:100%;max-width:390px;background:#121214;border-radius:32px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 30px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);overflow:hidden;display:flex;flex-direction:column}
+.top{padding:18px 20px 8px;display:flex;justify-content:space-between;align-items:center}
+.dot{width:12px;height:12px;border-radius:50%}.dots{display:flex;gap:7px}
+.title{font-size:13px;letter-spacing:0.08em;color:rgba(255,255,255,0.35);font-weight:600}
+.display{background:#0a0a0b;margin:8px 14px 12px;border-radius:18px;border:1px solid rgba(255,255,255,0.06);box-shadow:inset 0 2px 12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.03);padding:14px 16px 12px;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end}
+.expr{font-size:15px;color:rgba(255,255,255,0.38);text-align:right;min-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.02em}
+.result{font-size:38px;font-weight:300;text-align:right;letter-spacing:-0.02em;line-height:1.1;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f5f5f0}
+.pad{padding:0 12px 18px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+button.btn{height:62px;border-radius:14px;border:1px solid rgba(255,255,255,0.07);font-size:22px;font-weight:400;color:#E8E8E8;background:#2B2B2E;box-shadow:0 3px 0 #161618, 0 4px 10px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);transition:transform 0.08s, box-shadow 0.08s, background 0.08s;user-select:none;position:relative}
+button.btn:active{transform:translateY(3px);box-shadow:0 0 0 #161618, 0 1px 4px rgba(0,0,0,0.4), inset 0 1px 3px rgba(0,0,0,0.5);background:#232326}
+button.fn{background:#3F3F46;color:#fff;border-color:rgba(255,255,255,0.08);box-shadow:0 3px 0 #26262b,0 4px 10px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.07)}
+button.fn:active{background:#35353d;box-shadow:0 0 0 #26262b}
+button.op{background:linear-gradient(180deg,#D97706 0%,#B45309 100%);color:#fff;font-weight:500;border-color:rgba(0,0,0,0.2);box-shadow:0 3px 0 #78350F,0 4px 12px rgba(217,119,6,0.28),inset 0 1px 0 rgba(255,255,255,0.18);font-size:24px}
+button.op:active{background:#92400E;box-shadow:0 0 0 #78350F;transform:translateY(3px)}
+button.eq{background:linear-gradient(180deg,#F59E0B 0%,#D97706 100%);color:#fff;font-weight:600;box-shadow:0 3px 0 #92400E,0 6px 16px rgba(245,158,11,0.35),inset 0 1px 0 rgba(255,255,255,0.22)}
+button.zero{grid-column:span 2}
+.sci-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 12px 10px}
+.sci-row button{height:42px;font-size:13px;border-radius:11px;background:#1E1E21;color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.06);box-shadow:0 2px 0 #111113,0 2px 6px rgba(0,0,0,0.4)}
+.sci-row button:active{transform:translateY(2px);box-shadow:none}
+.bar{height:34px;display:flex;align-items:center;justify-content:center}
+.ind{width:124px;height:5px;border-radius:999px;background:rgba(255,255,255,0.85)}
+.mode{display:flex;gap:6px;padding:0 14px 10px}
+.mode button{flex:1;height:30px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:0.05em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.4)}
+.mode button.active{background:#fff;color:#000;border-color:#fff}
+.conv{padding:0 14px 14px;display:none}
+.conv.show{display:block}
+.row{display:flex;gap:8px;margin-bottom:8px}
+select.sel{flex:1;height:40px;border-radius:12px;background:#1E1E21;color:#fff;border:1px solid rgba(255,255,255,0.08);padding:0 10px;font-size:13px}
+input.inp{flex:1;height:40px;border-radius:12px;background:#0A0A0B;color:#fff;border:1px solid rgba(255,255,255,0.08);padding:0 12px;font-size:15px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top">
+    <div class="dots"><div class="dot" style="background:#FF5F57"></div><div class="dot" style="background:#FFBD2E"></div><div class="dot" style="background:#28CA42"></div></div>
+    <div class="title">CALCULATOR PRO • LEATHER</div>
+    <div style="width:36px"></div>
+  </div>
+  <div class="mode">
+    <button id="mStd" class="active" onclick="setMode('std')">STD</button>
+    <button id="mSci" onclick="setMode('sci')">SCI</button>
+    <button id="mConv" onclick="setMode('conv')">UNITS</button>
+  </div>
+  <div class="display" onclick="copyResult()">
+    <div id="expr" class="expr"></div>
+    <div id="result" class="result">0</div>
+  </div>
+  <div id="sciRow" class="sci-row" style="display:none">
+    <button onclick="add('sin(')">sin</button>
+    <button onclick="add('cos(')">cos</button>
+    <button onclick="add('tan(')">tan</button>
+    <button onclick="add('sqrt(')">√</button>
+    <button onclick="add('log(')">log</button>
+    <button onclick="add('ln(')">ln</button>
+    <button onclick="add('pi')">π</button>
+    <button onclick="add('e')">e</button>
+    <button onclick="add('^')">^</button>
+    <button onclick="add('(')">(</button>
+    <button onclick="add(')')">)</button>
+    <button onclick="add('!')">!</button>
+  </div>
+  <div class="pad" id="pad">
+    <button class="btn fn" onclick="press('ac')">AC</button>
+    <button class="btn fn" onclick="press('c')">C</button>
+    <button class="btn fn" onclick="press('%')">%</button>
+    <button class="btn op" onclick="press('/')">÷</button>
+    <button class="btn" onclick="press('7')">7</button>
+    <button class="btn" onclick="press('8')">8</button>
+    <button class="btn" onclick="press('9')">9</button>
+    <button class="btn op" onclick="press('*')">×</button>
+    <button class="btn" onclick="press('4')">4</button>
+    <button class="btn" onclick="press('5')">5</button>
+    <button class="btn" onclick="press('6')">6</button>
+    <button class="btn op" onclick="press('-')">−</button>
+    <button class="btn" onclick="press('1')">1</button>
+    <button class="btn" onclick="press('2')">2</button>
+    <button class="btn" onclick="press('3')">3</button>
+    <button class="btn op" onclick="press('+')">+</button>
+    <button class="btn zero" onclick="press('0')">0</button>
+    <button class="btn" onclick="press('.')">.</button>
+    <button class="btn eq" onclick="press('=')">=</button>
+  </div>
+  <div id="convBox" class="conv">
+    <div class="row"><select id="cat" class="sel" onchange="renderUnits()"><option value="length">Length</option><option value="land">Land - UP Bigha</option><option value="weight">Weight</option><option value="temp">Temperature</option></select></div>
+    <div class="row"><input id="fromVal" class="inp" value="1" oninput="doConv()"><select id="fromUnit" class="sel" onchange="doConv()"></select></div>
+    <div class="row"><input id="toVal" class="inp" readonly><select id="toUnit" class="sel" onchange="doConv()"></select></div>
+    <div style="font-size:10px;color:rgba(255,255,255,0.35);padding:6px 2px" id="convNote">UP Pucca Bigha (Jaunpur) = 27225 sq ft = 0.625 acre</div>
+  </div>
+  <div class="bar"><div class="ind"></div></div>
+</div>
+<script>
+// --- Audio tick always on ---
+let actx=null;
+function tick(type){
+  try{
+    if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
+    if(actx.state==='suspended') actx.resume();
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.connect(g); g.connect(actx.destination);
+    o.type='sine';
+    let f=900, d=0.06;
+    if(type==='op'){f=600;d=0.07}
+    if(type==='eq'){f=700;d=0.12; o.frequency.exponentialRampToValueAtTime(350, actx.currentTime+d);}
+    else o.frequency.value=f;
+    g.gain.setValueAtTime(0.22,actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime+d);
+    o.start(); o.stop(actx.currentTime+d);
+    if(navigator.vibrate) navigator.vibrate(10);
+  }catch(e){}
+}
+let exprStr='';
+function update(){
+  document.getElementById('expr').textContent=exprStr||'';
+  try{
+    if(!exprStr) {document.getElementById('result').textContent='0'; return;}
+    const v=evalSafe(exprStr);
+    document.getElementById('result').textContent=fmt(v);
+  }catch{ document.getElementById('result').textContent=exprStr.slice(-12) || '0';}
+}
+function evalSafe(s){
+  let t=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/π/g,'Math.PI').replace(/pi/g,'Math.PI');
+  t=t.replace(/sin\(/g,'Math.sin(').replace(/cos\(/g,'Math.cos(').replace(/tan\(/g,'Math.tan(').replace(/sqrt\(/g,'Math.sqrt(').replace(/log\(/g,'Math.log10(').replace(/ln\(/g,'Math.log(').replace(/\^/g,'**');
+  // factorial
+  t=t.replace(/(\d+)!/g,(_,n)=>{let r=1;for(let i=2;i<=+n;i++)r*=i;return r});
+  t=t.replace(/e(?![a-zA-Z0-9])/g,'Math.E');
+  return Function('"use strict";return ('+t+')')();
+}
+function fmt(n){
+  if(!isFinite(n)) return 'Error';
+  if(Math.abs(n)<1e-9) return '0';
+  const s=n.toString();
+  if(s.length>12){
+    if(Math.abs(n)>=1e9 || Math.abs(n)<1e-6) return n.toExponential(6);
+    return parseFloat(n.toPrecision(10)).toString();
+  }
+  return s;
+}
+function press(k){
+  if('0123456789.'.includes(k)) tick('num'); else if(k==='=') tick('eq'); else tick('op');
+  if(k==='ac'){exprStr='';update();return;}
+  if(k==='c'){exprStr=exprStr.slice(0,-1);update();return;}
+  if(k==='='){
+    try{const v=evalSafe(exprStr); exprStr=fmt(v); update();}catch{ document.getElementById('result').textContent='Error';}
+    return;
+  }
+  if(k==='%'){exprStr+='/100'; update(); return;}
+  exprStr+=k; update();
+}
+function add(s){ tick('op'); exprStr+=s; update(); }
+function setMode(m){
+  document.getElementById('mStd').classList.toggle('active',m==='std');
+  document.getElementById('mSci').classList.toggle('active',m==='sci');
+  document.getElementById('mConv').classList.toggle('active',m==='conv');
+  document.getElementById('sciRow').style.display=m==='sci'?'grid':'none';
+  document.getElementById('pad').style.display=m==='conv'?'none':'grid';
+  document.getElementById('convBox').classList.toggle('show',m==='conv');
+  if(m==='conv') renderUnits();
+}
+function copyResult(){ navigator.clipboard&&navigator.clipboard.writeText(document.getElementById('result').textContent); tick('op'); }
+// conv simple
+const units={
+ length:[{id:'m',l:'Meter',f:1},{id:'km',l:'Kilometer',f:1000},{id:'ft',l:'Feet',f:0.3048},{id:'in',l:'Inch',f:0.0254}],
+ land:[{id:'sqm',l:'Sq Meter',f:1},{id:'sqft',l:'Sq Feet',f:0.092903},{id:'acre',l:'Acre',f:4046.86},{id:'bigha_up',l:'Bigha UP (Jaunpur)',f:2529.29},{id:'biswa',l:'Biswa',f:126.4645},{id:'dismil',l:'Dismil',f:40.4686}],
+ weight:[{id:'kg',l:'Kg',f:1},{id:'g',l:'Gram',f:0.001},{id:'lb',l:'Pound',f:0.453592}],
+ temp:[{id:'c',l:'Celsius'},{id:'f',l:'Fahrenheit'}]
+};
+function renderUnits(){
+  const cat=document.getElementById('cat').value;
+  const list=units[cat];
+  const fu=document.getElementById('fromUnit'), tu=document.getElementById('toUnit');
+  fu.innerHTML=''; tu.innerHTML='';
+  list.forEach(u=>{let o=document.createElement('option');o.value=u.id;o.textContent=u.l;fu.appendChild(o);let o2=o.cloneNode(true);tu.appendChild(o2);});
+  tu.selectedIndex=1; doConv();
+}
+function doConv(){
+  const cat=document.getElementById('cat').value, fv=parseFloat(document.getElementById('fromVal').value)||0;
+  const from=document.getElementById('fromUnit').value, to=document.getElementById('toUnit').value;
+  if(cat==='temp'){
+    let c=from==='c'?fv:(fv-32)*5/9;
+    let out=to==='c'?c:c*9/5+32;
+    document.getElementById('toVal').value=out.toFixed(2);
+    return;
+  }
+  const list=units[cat];
+  const f=list.find(x=>x.id===from).f, t=list.find(x=>x.id===to).f;
+  const base=fv*f; const out=base/t;
+  document.getElementById('toVal').value=parseFloat(out.toFixed(6)).toString();
+}
+renderUnits();
+update();
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
