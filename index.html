@@ -52,8 +52,7 @@ button.zero{grid-column:span 2}
 .sci-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 12px 10px}
 .sci-row button{height:42px;font-size:13px;border-radius:11px;background:#1E1E21;color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.06);box-shadow:0 2px 0 #111113,0 2px 6px rgba(0,0,0,0.4)}
 .sci-row button:active{transform:translateY(2px);box-shadow:none}
-.bar{height:34px;display:flex;align-items:center;justify-content:center}
-.ind{width:124px;height:5px;border-radius:999px;background:rgba(255,255,255,0.85)}
+/* bar removed */
 .mode{display:flex;gap:6px;padding:0 14px 10px}
 .mode button{flex:1;height:30px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:0.05em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.4)}
 .mode button.active{background:#fff;color:#000;border-color:#fff}
@@ -68,7 +67,7 @@ input.inp{flex:1;height:40px;border-radius:12px;background:#0A0A0B;color:#fff;bo
 <div class="shell">
   <div class="top">
     <div class="dots"><div class="dot" style="background:#FF5F57"></div><div class="dot" style="background:#FFBD2E"></div><div class="dot" style="background:#28CA42"></div></div>
-    <div class="title">CALCULATOR PRO • LEATHER</div>
+    <div class="title">CALCULATOR PRO</div>
     <div style="width:36px"></div>
   </div>
   <div class="mode">
@@ -119,9 +118,9 @@ input.inp{flex:1;height:40px;border-radius:12px;background:#0A0A0B;color:#fff;bo
     <div class="row"><select id="cat" class="sel" onchange="renderUnits()"><option value="length">Length</option><option value="land">Land - UP Bigha</option><option value="weight">Weight</option><option value="temp">Temperature</option></select></div>
     <div class="row"><input id="fromVal" class="inp" value="1" oninput="doConv()"><select id="fromUnit" class="sel" onchange="doConv()"></select></div>
     <div class="row"><input id="toVal" class="inp" readonly><select id="toUnit" class="sel" onchange="doConv()"></select></div>
-    <div style="font-size:10px;color:rgba(255,255,255,0.35);padding:6px 2px" id="convNote">UP Pucca Bigha (Jaunpur) = 27225 sq ft = 0.625 acre</div>
+    <!-- note removed -->
   </div>
-  <div class="bar"><div class="ind"></div></div>
+  <!-- home indicator removed -->
 </div>
 <script>
 // --- Audio tick always on ---
