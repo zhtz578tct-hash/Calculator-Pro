@@ -33,16 +33,16 @@
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 body{background:#0a0a0a;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh;padding:12px;overflow:hidden}
-.shell{width:100%;max-width:390px;background:#121214;border-radius:32px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 30px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);overflow:hidden;display:flex;flex-direction:column}
+.shell{width:100%;max-width:390px;background:#121214;border-radius:32px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 30px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06);overflow:hidden;display:flex;flex-direction:column;min-height:640px}
 .top{padding:18px 20px 8px;display:flex;justify-content:space-between;align-items:center}
 .dot{width:12px;height:12px;border-radius:50%}.dots{display:flex;gap:7px}
 .title{font-size:13px;letter-spacing:0.08em;color:rgba(255,255,255,0.35);font-weight:600}
 .display{background:#0a0a0b;margin:8px 14px 12px;border-radius:18px;border:1px solid rgba(255,255,255,0.06);box-shadow:inset 0 2px 12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.03);padding:14px 16px 12px;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end}
-.expr{font-size:15px;color:rgba(255,255,255,0.38);text-align:right;min-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0.02em}
+.expr{font-size:15px;color:rgba(255,255,255,0.38);text-align:right;min-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .result{font-size:38px;font-weight:300;text-align:right;letter-spacing:-0.02em;line-height:1.1;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f5f5f0}
 .pad{padding:0 12px 18px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-button.btn{height:62px;border-radius:14px;border:1px solid rgba(255,255,255,0.07);font-size:22px;font-weight:400;color:#E8E8E8;background:#2B2B2E;box-shadow:0 3px 0 #161618, 0 4px 10px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);transition:transform 0.08s, box-shadow 0.08s, background 0.08s;user-select:none;position:relative}
-button.btn:active{transform:translateY(3px);box-shadow:0 0 0 #161618, 0 1px 4px rgba(0,0,0,0.4), inset 0 1px 3px rgba(0,0,0,0.5);background:#232326}
+button.btn{height:62px;border-radius:14px;border:1px solid rgba(255,255,255,0.07);font-size:22px;font-weight:400;color:#E8E8E8;background:#2B2B2E;box-shadow:0 3px 0 #161618,0 4px 10px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.06);transition:transform .08s,box-shadow .08s;background .08s;user-select:none;position:relative}
+button.btn:active{transform:translateY(3px);box-shadow:0 0 0 #161618,0 1px 4px rgba(0,0,0,0.4),inset 0 1px 3px rgba(0,0,0,0.5);background:#232326}
 button.fn{background:#3F3F46;color:#fff;border-color:rgba(255,255,255,0.08);box-shadow:0 3px 0 #26262b,0 4px 10px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.07)}
 button.fn:active{background:#35353d;box-shadow:0 0 0 #26262b}
 button.op{background:linear-gradient(180deg,#D97706 0%,#B45309 100%);color:#fff;font-weight:500;border-color:rgba(0,0,0,0.2);box-shadow:0 3px 0 #78350F,0 4px 12px rgba(217,119,6,0.28),inset 0 1px 0 rgba(255,255,255,0.18);font-size:24px}
@@ -52,15 +52,19 @@ button.zero{grid-column:span 2}
 .sci-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 12px 10px}
 .sci-row button{height:42px;font-size:13px;border-radius:11px;background:#1E1E21;color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.06);box-shadow:0 2px 0 #111113,0 2px 6px rgba(0,0,0,0.4)}
 .sci-row button:active{transform:translateY(2px);box-shadow:none}
-/* bar removed */
 .mode{display:flex;gap:6px;padding:0 14px 10px}
 .mode button{flex:1;height:30px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:0.05em;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.4)}
 .mode button.active{background:#fff;color:#000;border-color:#fff}
-.conv{padding:0 14px 14px;display:none}
-.conv.show{display:block}
+.conv{padding:0 14px 18px;display:none;flex:1}
+.conv.show{display:flex;flex-direction:column}
 .row{display:flex;gap:8px;margin-bottom:8px}
 select.sel{flex:1;height:40px;border-radius:12px;background:#1E1E21;color:#fff;border:1px solid rgba(255,255,255,0.08);padding:0 10px;font-size:13px}
 input.inp{flex:1;height:40px;border-radius:12px;background:#0A0A0B;color:#fff;border:1px solid rgba(255,255,255,0.08);padding:0 12px;font-size:15px}
+.quick{margin-top:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:12px}
+.quick-title{font-size:10px;letter-spacing:0.07em;color:rgba(255,255,255,0.35);margin-bottom:10px;font-weight:700}
+.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qitem{background:#1E1E21;border-radius:10px;padding:8px 10px;border:1px solid rgba(255,255,255,0.04)}
+.qk{font-size:10px;color:rgba(255,255,255,0.45)} .qv{font-size:13px;color:#fff;font-weight:600;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -118,12 +122,13 @@ input.inp{flex:1;height:40px;border-radius:12px;background:#0A0A0B;color:#fff;bo
     <div class="row"><select id="cat" class="sel" onchange="renderUnits()"><option value="length">Length</option><option value="land">Land - UP Bigha</option><option value="weight">Weight</option><option value="temp">Temperature</option></select></div>
     <div class="row"><input id="fromVal" class="inp" value="1" oninput="doConv()"><select id="fromUnit" class="sel" onchange="doConv()"></select></div>
     <div class="row"><input id="toVal" class="inp" readonly><select id="toUnit" class="sel" onchange="doConv()"></select></div>
-    <!-- note removed -->
+    <div id="quickRef" class="quick">
+      <div class="quick-title" id="quickTitle">ALL CONVERSIONS</div>
+      <div class="qgrid" id="quickGrid"></div>
+    </div>
   </div>
-  <!-- home indicator removed -->
 </div>
 <script>
-// --- Audio tick always on ---
 let actx=null;
 function tick(type){
   try{
@@ -154,7 +159,6 @@ function update(){
 function evalSafe(s){
   let t=s.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/π/g,'Math.PI').replace(/pi/g,'Math.PI');
   t=t.replace(/sin\(/g,'Math.sin(').replace(/cos\(/g,'Math.cos(').replace(/tan\(/g,'Math.tan(').replace(/sqrt\(/g,'Math.sqrt(').replace(/log\(/g,'Math.log10(').replace(/ln\(/g,'Math.log(').replace(/\^/g,'**');
-  // factorial
   t=t.replace(/(\d+)!/g,(_,n)=>{let r=1;for(let i=2;i<=+n;i++)r*=i;return r});
   t=t.replace(/e(?![a-zA-Z0-9])/g,'Math.E');
   return Function('"use strict";return ('+t+')')();
@@ -191,7 +195,6 @@ function setMode(m){
   if(m==='conv') renderUnits();
 }
 function copyResult(){ navigator.clipboard&&navigator.clipboard.writeText(document.getElementById('result').textContent); tick('op'); }
-// conv simple
 const units={
  length:[
   {id:'m',l:'Meter',f:1},
@@ -242,12 +245,35 @@ function doConv(){
     let c=from==='c'?fv:(fv-32)*5/9;
     let out=to==='c'?c:c*9/5+32;
     document.getElementById('toVal').value=out.toFixed(2);
+    document.getElementById('quickRef').style.display='none';
     return;
   }
   const list=units[cat];
-  const f=list.find(x=>x.id===from).f, t=list.find(x=>x.id===to).f;
-  const base=fv*f; const out=base/t;
+  const fObj=list.find(x=>x.id===from); const tObj=list.find(x=>x.id===to);
+  if(!fObj||!tObj) return;
+  const base=fv*fObj.f; const out=base/tObj.f;
   document.getElementById('toVal').value=parseFloat(out.toFixed(6)).toString();
+  buildQuick(fv, from, to, cat);
+}
+function buildQuick(fv, fromId, toId, cat){
+  const list=units[cat];
+  const fromObj=list.find(x=>x.id===fromId);
+  if(!fromObj) return;
+  const base=fv*fromObj.f;
+  const grid=document.getElementById('quickGrid');
+  grid.innerHTML='';
+  document.getElementById('quickTitle').textContent = fv + ' ' + fromObj.l + ' = OTHER UNITS';
+  document.getElementById('quickRef').style.display='block';
+  list.forEach(u=>{
+    if(u.id===fromId || u.id===toId) return;
+    const val=base/u.f;
+    let txt = Math.abs(val) >= 10000 ? val.toExponential(3) : (Math.abs(val) < 0.0001 && val!=0 ? val.toExponential(3) : parseFloat(val.toFixed(4)).toString());
+    const div=document.createElement('div');
+    div.className='qitem';
+    div.innerHTML='<div class="qk">'+u.l+'</div><div class="qv">'+txt+'</div>';
+    div.onclick=()=>{document.getElementById('toUnit').value=u.id; doConv();};
+    grid.appendChild(div);
+  });
 }
 renderUnits();
 update();
